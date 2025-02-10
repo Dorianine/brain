@@ -2,7 +2,9 @@ site_name: Dorianine'home
 nav: 
   - 主页: index.md
   - 教程:
-    - C: hhome/docs/c语言.md
+    - C: Tutorial/C.md
+    - Java: Tutorial/Java.md
+    - Python: Tutorial/Python.md
   - 关于我: about.md
 theme:
   name: material

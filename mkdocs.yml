@@ -8,3 +8,4 @@ nav:
   - 关于我: about.md
 theme:
   name: material
+favicon: 'docs/img/favicon.ico' 

@@ -15,7 +15,7 @@ theme:
       toggle:
         icon: material/link
         name: 关闭自动模式
-        primary: blue grey
+        primary: pink
     - media: "(prefers-color-scheme: light)"
       scheme: default # 日间模式
       primary: blue grey # 上方的
@@ -55,5 +55,7 @@ theme:
     - content.action.view
     - content.code.annotate
   language: zh # 一些提示性的文字会变成中文
+  extra_javascript:
+  - javascripts/extra.js
 
  

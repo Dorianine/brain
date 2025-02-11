@@ -33,7 +33,7 @@ theme:
         icon: material/toggle-switch-off-outline
         name: 切换至日间模式
   favicon: img/favicon.ico 
-    features:
+  features:
     - announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
     # - navigation.instant
     #- header.autohide  #自动隐藏

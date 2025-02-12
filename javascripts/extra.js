@@ -1,148 +1,26 @@
-//雪花
-const fps = 30;
-const mspf = Math.floor(1000 / fps) ; 
-
-let width = window.innerWidth || document.documentElement.clientWidth;
-let height = window.innerHeight || document.documentElement.clientHeight;
-let canvas;
-window.addEventListener('resize', () => {
-  width = window.innerWidth || document.documentElement.clientWidth;
-  height = window.innerHeight || document.documentElement.clientHeight;
-  if (canvas) {
-    canvas.width = width;
-    canvas.height = height;
+//樱花
+Sakura.prototype.draw = function (cxt) {
+  cxt.save(); var xc = 40 * this.s / 4; cxt.translate(this.x, this.y); cxt.rotate(this.r); cxt.drawImage(img, 0, 0, 40 * this.s, 40 * this.s)
+  cxt.restore();
+}
+Sakura.prototype.update = function () { this.x = this.fn.x(this.x, this.y); this.y = this.fn.y(this.y, this.y); this.r = this.fn.r(this.r); if (this.x > window.innerWidth || this.x < 0 || this.y > window.innerHeight || this.y < 0) { this.r = getRandom('fnr'); if (Math.random() > 0.4) { this.x = getRandom('x'); this.y = 0; this.s = getRandom('s'); this.r = getRandom('r'); } else { this.x = window.innerWidth; this.y = getRandom('y'); this.s = getRandom('s'); this.r = getRandom('r'); } } }
+SakuraList = function () { this.list = []; }
+SakuraList.prototype.push = function (sakura) { this.list.push(sakura); }
+SakuraList.prototype.update = function () { for (var i = 0, len = this.list.length; i < len; i++) { this.list[i].update(); } }
+SakuraList.prototype.draw = function (cxt) { for (var i = 0, len = this.list.length; i < len; i++) { this.list[i].draw(cxt); } }
+SakuraList.prototype.get = function (i) { return this.list[i]; }
+SakuraList.prototype.size = function () { return this.list.length; }
+function getRandom(option) {
+  var ret, random; switch (option) {
+      case 'x': ret = Math.random() * window.innerWidth; break; case 'y': ret = Math.random() * window.innerHeight; break; case 's': ret = Math.random(); break; case 'r': ret = Math.random() * 6; break; case 'fnx': random = -0.5 + Math.random() * 1; ret = function (x, y) { return x + 0.5 * random - 1.7; }; break; case 'fny': random = 1.5 + Math.random() * 0.7
+          ret = function (x, y) { return y + random; }; break; case 'fnr': random = Math.random() * 0.03; ret = function (r) { return r + random; }; break;
   }
-});
-
-let particles = [];
-let wind = [0, 0];
-let cursor = [0, 0];
-
-function velocity(r) {
-  return 70 / r + 30;
+  return ret;
 }
-
-function sine_component(h, a) {
-  return [2 * Math.PI / h, Math.random() * a, Math.random() * 2 * Math.PI]; // [frequency, amplitude, phase]
+function startSakura() {
+  requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame; var canvas = document.createElement('canvas'), cxt; staticx = true; canvas.height = window.innerHeight; canvas.width = window.innerWidth; canvas.setAttribute('style', 'position: fixed;left: 0;top: 0;pointer-events: none;'); canvas.setAttribute('id', 'canvas_sakura'); document.getElementsByTagName('body')[0].appendChild(canvas); cxt = canvas.getContext('2d'); var sakuraList = new SakuraList(); for (var i = 0; i < 50; i++) { var sakura, randomX, randomY, randomS, randomR, randomFnx, randomFny; randomX = getRandom('x'); randomY = getRandom('y'); randomR = getRandom('r'); randomS = getRandom('s'); randomFnx = getRandom('fnx'); randomFny = getRandom('fny'); randomFnR = getRandom('fnr'); sakura = new Sakura(randomX, randomY, randomS, randomR, { x: randomFnx, y: randomFny, r: randomFnR }); sakura.draw(cxt); sakuraList.push(sakura); }
+  stop = requestAnimationFrame(function () { cxt.clearRect(0, 0, canvas.width, canvas.height); sakuraList.update(); sakuraList.draw(cxt); stop = requestAnimationFrame(arguments.callee); })
 }
-
-function calc_sine(components, x) {
-  let sum = 0;
-  for (let i = 0; i < components.length; i++) {
-    const [f, a, p] = components[i];
-    sum += Math.sin(x * f + p) * a;
-  }
-  return sum;
-}
-
-function gen_particle() {
-  let r = Math.random() * 4 + 1;
-  return {
-    radius: r,
-    x: Math.random() * width,
-    y: -r,
-    opacity: Math.random(),
-    sine_components: [sine_component(height, 3), sine_component(height / 2, 2), sine_component(height / 5, 1), sine_component(height / 10, 0.5)],
-  };
-}
-
-function update_pos(dt) {
-  const n = particles.length;
-  for (let i = 0; i < n; i++) {
-    const v = velocity(particles[i].radius);
-    particles[i].x += calc_sine(particles[i].sine_components, particles[i].y) * v / 5 * dt;
-    particles[i].y += v * dt;
-
-    // const dist = Math.hypot(particles[i].x - cursor[0], particles[i].y - cursor[1]) + 1;
-    // particles[i].x += wind[0] * dt / dist
-    // particles[i].y += wind[1] * dt / dist;
-
-    if (particles[i].y - particles[i].radius > height) {
-      particles[i] = gen_particle();  
-    }
-  }
-}
-
-let context_cache;
-function get_context() {
-  if (context_cache)
-    return context_cache;
-
-  canvas = document.createElement('canvas');
-  canvas.id = 'snow-canvas';
-  canvas.width = width;
-  canvas.height = height;
-  canvas.style = 'position: fixed; top: 0; left: 0; overflow: hidden; pointer-events: none; z-index: 256;';
-  if ((document.documentElement.dataset.darkreaderMode || "").startsWith('filter'))
-    canvas.style.filter = 'invert(1)';
-  document.body.appendChild(canvas);
-
-  context_cache = canvas.getContext('2d');
-  return context_cache;
-}
-
-function draw() {
-  const ctx = get_context();
-
-  ctx.clearRect(0, 0, width, height);
-
-  const n = particles.length;
-  for (let i = 0; i < n; i++) {
-    const p = particles[i];
-    ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-    ctx.shadowColor = '#80EDF7';
-    ctx.shadowBlur = 7;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, 2*Math.PI);
-    ctx.fill();
-  }
-}
-
-let focused = true;
-let disabled = false;
-let lastTime = performance.now();
-const requestFrame = () => setTimeout(loop, mspf);
-function loop() {
-  const dt = (performance.now() - lastTime) / 1000;
-
-  if (particles.length < 120 && Math.random() < 0.1) {
-    particles.push(gen_particle());
-  }
-
-  update_pos(dt);
-  draw();
-
-  lastTime = performance.now();
-  if (focused && !disabled)
-    requestFrame();
-}
-
-
-window.addEventListener('focus', () => {
-  console.log('snow start');
-  focused = true;
-  lastTime = performance.now();
-  requestFrame();
-});
-
-window.addEventListener('blur', () => {
-  console.log('snow stop');
-  focused = false;
-});
-
-window.addEventListener('keydown', e => {
-  if (e.ctrlKey && e.key == 's') {
-    e.preventDefault();
-    disabled = !disabled;
-    if (disabled) {
-      canvas.style.display = 'none';
-    } else {
-      canvas.style.display = 'block';
-      lastTime = performance.now();
-      requestFrame();
-    }
-  }
-});
-
-requestFrame();
-//雪花
+window.onresize = function () { var canvasSnow = document.getElementById('canvas_snow'); }
+img.onload = function () { startSakura(); }
+//樱花

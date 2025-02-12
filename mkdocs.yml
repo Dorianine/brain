@@ -8,7 +8,8 @@ nav:
     - Java: Tutorial/Java.md
     - Python: Tutorial/Python.md
   - 关于我: about.md
-  - blogger: blog/index.md
+  - Blogger:
+    - index: blog/index.md
 theme:
   logo: img/头像.jpg #左上角logo，可插入图片链接
   name: material

@@ -11,7 +11,7 @@ hide:
 # MyBlog
 <div class="grid cards" markdown>
 
--   :material-clock-fast:{ .lg .middle } __What is Blog?__
+-   :material-clock-fast:{ .lg .middle } __何为博客?__
 
     ---
     **博客，仅音译，英文名为Blogger，为Web Log的混成词。**  

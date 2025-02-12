@@ -9,7 +9,7 @@ nav:
     - Python: Tutorial/Python.md
   - 关于我: about.md
 theme:
-  logo: assets/头像.jpg #左上角logo，可插入图片链接
+  logo: img/头像.jpg #左上角logo，可插入图片链接
   name: material
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -55,6 +55,7 @@ plugins:
   - search
   - git-revision-date-localized:
       enable_creation_date: true
+  - blog
 markdown_extensions: #详见https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/ 和 https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
   - attr_list

@@ -56,6 +56,14 @@ comments: false
     === "移动端"
 
         请点击左上角图标选择分类和文章
+<div class="grid cards" markdown>
+
+-   :simple-materialformkdocs:{ .lg .middle } __Mkdocs教程__
+
+    ---
+
+    - [C语言](Tutorial/C.md)
+</div>
     
 
 

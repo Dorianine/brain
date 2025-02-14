@@ -56,9 +56,21 @@ comments: false
     === "移动端"
 
         请点击左上角图标选择分类和文章
+</div>
+<style>
+    @media only screen and (max-width: 768px) {
+        .responsive-image {
+            display: none;
+        }
+    }
+</style>
+
+
+***
+
 <div class="grid cards" markdown>
 
--   :simple-materialformkdocs:{ .lg .middle } __Mkdocs教程__
+-   :octicons-bookmark-16:{ .lg .middle } __推荐的文章__
 
     ---
 

@@ -97,6 +97,11 @@ markdown_extensions: #详见https://squidfunk.github.io/mkdocs-material/setup/ex
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.pathconverter:
+      base_path: '' # default: ''
+      relative_path: '' # default ''
+      absolute: false # default: false
+      tags: 'a script img link object embed'
 extra:
   alternate:
     - name: 简体中文

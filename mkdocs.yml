@@ -5,6 +5,7 @@ nav:
   - Home: index.md
   - Learn:
     - C: Tutorial/C.md
+    - vitepree: https://vitepress.yiov.top
     - Java: Tutorial/Java.md
     - Python: Tutorial/Python.md
   - about me: about.md

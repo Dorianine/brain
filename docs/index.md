@@ -43,7 +43,7 @@ comments: false
 -   :material-notebook-edit-outline:{ .lg .middle } __导航栏__
 
     ---
-    ![image](img/love.jpg){ class="responsive-image" align=right width="340" height="280" style="border-radius: 25px;" }
+    ![image](img/love.jpg){ class="responsive-image" align=right width="340" height="300" style="border-radius: 25px;" }
 
     - [x] 通过目录以打开文章
     - [x] 搜索关键词查询文章

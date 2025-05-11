@@ -2,14 +2,13 @@
 
 <div align="center">
 
-<img src="https://www.imagehub.cc/image/sheep.IE04To" width="120" style="border-radius: 50%; box-shadow: 0 0 10px rgba(190, 106, 165, 0.2); margin-bottom: 10px;">
+![avatar](https://www.imagehub.cc/image/sheep.IE04To){ width="120" style="border-radius: 50%; box-shadow: 0 0 10px rgba(190, 106, 165, 0.2); margin-bottom: 10px;" }
 
 <h2 style="text-align: center;">
   <span style="background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; color: transparent;">
     Dorianine
   </span>
 </h2>
-
 
 </div>
 

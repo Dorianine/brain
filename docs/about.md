@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="/hhome/docs/img/sheep.jpg" alt="avatar" width="120" style="border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.2); margin-bottom: 10px;">
+<img src="img/sheep.jpg" width="120" style="border-radius: 50%; box-shadow: 0 0 10px rgba(25, 134, 144, 0.2); margin-bottom: 10px;">
 
 ## <span style="background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; color: transparent;">Dorianine</span>
 

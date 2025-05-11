@@ -4,7 +4,12 @@
 
 <img src="./img/sheep.jpg" width="120" style="border-radius: 50%; box-shadow: 0 0 10px rgba(190, 106, 165, 0.2); margin-bottom: 10px;">
 
-## <span style="background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; color: transparent;">Dorianine</span>
+<h2 style="text-align: center;">
+  <span style="background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; color: transparent;">
+    Dorianine
+  </span>
+</h2>
+
 
 </div>
 
@@ -24,7 +29,7 @@
 - C
 - Java（ing）
 - MkDocs + GitHub Pages
-- VitePress 🌱
+- VitePress 
 - Web前端路过中... 🚧
 
 ---

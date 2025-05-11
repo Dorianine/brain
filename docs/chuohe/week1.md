@@ -1,20 +1,59 @@
-# 第1周：初识土地，体验劳作
+# 🌱 育苗实践
 
-> 时间：2025年5月X日  
-> 地点：锄禾班基地  
-> 天气：晴
+## 播种育苗
 
-我们第一次走进田野，一切都很新鲜。从认识土地，到学习锄草、施肥，每一步都让人充满敬畏。
+<table>
+  <tr>
+    <td width="40%">
+      <img src="../img/c1.jpg" alt="播种育苗" style="width: 100%; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1);">
+    </td>
+    <td style="padding-left: 1rem;">
+      在老师的带领下，我们开展了豆类的播种育苗实验。从处理土壤到播种，每一个步骤都让我们感受到生命的悄然萌发。
+    </td>
+  </tr>
+</table>
 
-> “土地不会说话，但会记得你的辛苦。”——一位农户的话
+---
 
-## 🌱 今日学习
+## 扦插实验
 
-- 锄草方法与工具使用
-- 农田基础构造介绍
-- 常见杂草识别（马唐、牛筋草等）
+<table>
+  <tr>
+    <td style="padding-right: 1rem;">
+      我们尝试对一种彩叶植物进行扦插，剪取、选芽、插入基质，一系列动作虽细致但富有成就感。
+    </td>
+    <td width="40%">
+      <img src="../img/c2.jpg" alt="扦插" style="width: 100%; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+</table>
 
-## 🤔 我的思考
+---
 
-劳动不是“体验项目”，而是理解人与自然关系的窗口。
+## 多肉移载
 
+<table>
+  <tr>
+    <td width="40%">
+      <img src="../img/c3.jpg" alt="多肉移载" style="width: 100%; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1);">
+    </td>
+    <td style="padding-left: 1rem;">
+      选取我们喜欢的多肉植物，进行移栽。带回寝室培养呵护，看着多肉一点点成长。
+    </td>
+  </tr>
+</table>
+
+---
+
+## 收获与回望
+
+<table>
+  <tr>
+    <td style="padding-right: 1rem;">
+      本次田野活动不仅增长了我的育苗知识，更提升了动手能力与团队协作意识。看着自己育的苗一天天长大，心中欣喜万分。我们与自然共处，在泥土中收获成长。
+    </td>
+    <td width="40%">
+      <img src="../img/c4.jpg" alt="合影" style="width: 100%; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1);">
+    </td>
+  </tr>
+</table>

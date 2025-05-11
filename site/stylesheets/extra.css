@@ -244,3 +244,20 @@
         opacity: 1;
     }
   }
+  .chips ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  }
+
+  .chips li {
+  background: #e0f7fa;
+  color: #00796b;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  }

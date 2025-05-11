@@ -8,13 +8,13 @@ nav:
     - vitepress: https://vitepress.yiov.top
     - Java: Tutorial/Java.md
     - Python: Tutorial/Python.md
-  - about me: about.md
   - Blogger:
     - index: blog/index.md
   - Chuohe:
     - 田野笔记总览: chuohe/index.md
     - 初识土地: chuohe/week1.md
     - 风雨农忙: chuohe/week2.md
+  - about me: about.md
 
 theme:
   logo: img/头像.jpg #左上角logo，可插入图片链接

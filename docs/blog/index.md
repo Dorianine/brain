@@ -8,10 +8,10 @@ hide:
 # icon: octicons/home-fill-24
 ---
 
-# MyBlog
+# 我的博客
 <div class="grid cards" markdown>
 
--   :material-clock-fast:{ .lg .middle } __何为博客?__
+-   :material-clock-fast:{ .lg .middle } __博客是？__
 
     ---
     **博客，仅音译，英文名为Blogger，为Web Log的混成词。**  

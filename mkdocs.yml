@@ -12,7 +12,7 @@ nav:
     - Python: Tutorial/Python.md
   - 博客:
     - index: blog/index.md
-  - 田野笔记:
+  - 锄禾班:
     - 田野笔记总览: chuohe/index.md
     - 初识土地，培育新苗: chuohe/week1.md
     - 整地起垄，实现滴灌: chuohe/week2.md

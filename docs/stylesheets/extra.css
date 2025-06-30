@@ -261,3 +261,24 @@
   font-weight: 500;
   box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
   }
+/* 全屏背景样式 */
+.homepage-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 确保背景在内容下方 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('../img/butterflt.png'); /* 图片路径 */
+}
+
+/* 确保内容可读 */
+.homepage-content {
+    position: relative;
+    color: white; /* 根据背景调整文字颜色 */
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明遮罩增强可读性 */
+}

@@ -50,8 +50,6 @@ theme:
   language: zh # 一些提示性的文字会变成中文
 plugins:
   - search
-  - git-revision-date-localized:
-      enable_creation_date: False
   - blog
 markdown_extensions: #详见https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/ 和 https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr

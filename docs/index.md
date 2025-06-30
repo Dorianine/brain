@@ -17,7 +17,7 @@ comments: false
 
     ---
 
-    - [C语言](Tutorial/C.md)
+    - [多元函数](Tutorial/duoyuan.md)
 </div>
     
 

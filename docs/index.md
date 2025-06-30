@@ -18,6 +18,7 @@ comments: false
     ---
 
     - [多元函数](Tutorial/duoyuan.md)
+    - [常微分方程](Tutorial/odeindex.md)
 </div>
     
 

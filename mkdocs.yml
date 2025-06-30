@@ -8,6 +8,7 @@ nav:
     - vitepress: https://vitepress.yiov.top
     - 现代食品安全科学: Tutorial/foodsafe.md
     - 微积分: Tutorial/calculus.md
+    - 常微分: Tutorial/ODE.md
     - Python: Tutorial/Python.md
   - 博客:
     - index: blog/index.md

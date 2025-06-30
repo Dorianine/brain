@@ -2,5 +2,5 @@ authors:
   Dorianine:
     name: Dorianine   # Author name
     description: do what I want to do # Author description
-    avatar: img/头像.jpg
+    avatar: ../img/sheep.jpg  # Author avatar
      # Author avatar

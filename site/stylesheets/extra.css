@@ -275,10 +275,3 @@
     background-image: url('../img/butterflt.png'); /* 图片路径 */
 }
 
-/* 确保内容可读 */
-.homepage-content {
-    position: relative;
-    color: white; /* 根据背景调整文字颜色 */
-    padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明遮罩增强可读性 */
-}

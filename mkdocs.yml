@@ -10,6 +10,11 @@ nav:
     - 微积分: Tutorial/calculus.md
     - 常微分: Tutorial/ode1index.md
     - Python: Tutorial/Python.md
+    - 英语:
+      - 语法: Tutorial/English/grammar.md
+      - 词汇: Tutorial/English/vocabulary.md
+      - 阅读: Tutorial/English/reading.md
+      - 写作: Tutorial/English/writing.md
   - 博客:
     - index: blog/index.md
   - 锄禾班:

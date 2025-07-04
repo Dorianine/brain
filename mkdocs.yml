@@ -58,7 +58,7 @@ theme:
 plugins:
   - search
   - blog
-copyright: Copyright &copy; Dorianine/All Rights Reserved. # 左下角的版权声明
+copyright: Copyright &copy; 2025 Dorianine/All Rights Reserved. # 左下角的版权声明
 markdown_extensions: #详见https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/ 和 https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
   - attr_list

@@ -58,6 +58,7 @@ theme:
 plugins:
   - search
   - blog
+copyright: Copyright &copy; Dorianine/All Rights Reserved. # 左下角的版权声明
 markdown_extensions: #详见https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/ 和 https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
   - attr_list
@@ -116,7 +117,7 @@ extra:
       link: /Mkdocs-Wcowin/ZH-TW/
       # https://wcowin-work.translate.goog/?_x_tr_sl=zh-CN&_x_tr_tl=zh-TW&_x_tr_hl=zh-CN&_x_tr_pto=wapp
       lang: zh-TW
-  generator: false #是否删除页脚显示“使用 MkDocs 材料制造”
+  generator: True #是否删除页脚显示“使用 MkDocs 材料制造”
 extra_javascript:
   - javascripts/extra.js #自定义javascript
   # - ckplayer/js/ckplayer.js #播放器配置

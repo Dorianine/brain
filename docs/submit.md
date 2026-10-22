@@ -5,7 +5,7 @@
 
 <div class="submit-card" markdown>
 
-<form id="submissionForm" onsubmit="handleFormSubmit(event)">
+<form id="submissionForm">
 
 <div class="form-grid">
   <div class="form-group">
@@ -324,19 +324,17 @@
         showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
       };
 
+      function showError(msg) {
+        if (statusAlert) {
+          statusAlert.className = 'status-alert status-error';
+          statusAlert.style.display = 'block';
+          statusAlert.innerHTML = `<strong>传输异常：</strong>${msg}`;
+        }
+      }
+
       xhr.send(formData);
     } catch (err) {
-      alert('前端代码运行异常: ' + err.message);
       console.error(err);
     }
   };
-
-    function showError(msg) {
-      statusAlert.className = 'status-alert status-error';
-      statusAlert.style.display = 'block';
-      statusAlert.innerHTML = `<strong>传输异常</strong><br>${msg}`;
-    }
-
-    xhr.send(formData);
-  }
 </script>

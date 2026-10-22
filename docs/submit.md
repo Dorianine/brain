@@ -41,7 +41,7 @@
 
 <div id="progressContainer" class="progress-container" style="display:none;">
   <div class="progress-labels">
-    <span>正在传输数据流...</span>
+    <span id="progressPhase">正在传输数据流...</span>
     <span id="progressText">0%</span>
   </div>
   <div class="progress-track">
@@ -50,6 +50,7 @@
 </div>
 
 <div id="statusAlert" class="status-alert" style="display:none;"></div>
+<div id="debugStatus" style="font-size:0.85rem; margin:10px 0; text-align:center; min-height:1.2rem; color:var(--md-default-fg-color--lighter);"></div>
 
 <button type="button" id="submitBtn" onclick="handleFormSubmit(event)" class="md-button md-button--primary submit-btn">
   提交素材数据流
@@ -58,6 +59,16 @@
 </form>
 
 </div>
+
+---
+
+## 已生成的报告
+
+<div id="reportsContainer" class="reports-container">
+  <div style="font-size:0.85rem; color:var(--md-default-fg-color--lighter);">正在加载已生成的报告...</div>
+</div>
+
+---
 
 ??? note "传输节点配置"
     默认传输节点已配置为国内高速公网通道（`https://27c4615a.r8.cpolar.cn/api/upload`）。  
@@ -176,6 +187,42 @@
   border: 1px solid rgba(239, 68, 68, 0.4);
   color: #ef4444;
 }
+.reports-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 1.2rem 0;
+}
+.report-card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--md-code-bg-color, rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--md-default-fg-color--lightest, rgba(255, 255, 255, 0.1));
+  border-radius: var(--base-border-radius, 8px);
+  padding: 12px 16px;
+  gap: 12px;
+}
+.report-card-item:hover {
+  border-color: var(--md-primary-fg-color);
+}
+.report-info-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--md-default-fg-color);
+  margin-bottom: 3px;
+}
+.report-info-meta {
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--lighter);
+}
+.report-dl-btn {
+  font-size: 0.82rem;
+  padding: 4px 14px;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
 </style>
 
 <script>
@@ -210,6 +257,11 @@
       const statusAlert = document.getElementById('statusAlert');
 
       function showInlineError(msg, focusId) {
+        const debugStatus = document.getElementById('debugStatus');
+        if (debugStatus) {
+          debugStatus.innerText = msg;
+          debugStatus.style.color = '#ef4444';
+        }
         if (statusAlert) {
           statusAlert.className = 'status-alert status-error';
           statusAlert.style.display = 'block';
@@ -275,6 +327,14 @@
           const percent = Math.round((evt.loaded / evt.total) * 100);
           progressBar.style.width = percent + '%';
           progressText.innerText = percent + '%';
+          const debugStatus = document.getElementById('debugStatus');
+          if (debugStatus) {
+            if (percent >= 100) {
+              debugStatus.innerText = '数据已推送完毕 (100%)，正在后台排版生成 Word 报告，请稍候约 3 秒...';
+            } else {
+              debugStatus.innerText = '正在传输数据流 (' + percent + '%)...';
+            }
+          }
         }
       };
 
@@ -289,17 +349,36 @@
         if (xhr.status >= 200 && xhr.status < 300) {
           try {
             const res = JSON.parse(xhr.responseText);
-            let downloadLink = '';
-            if (res.download_url) {
-              const baseDomain = apiUrl.replace('/api/upload', '');
-              downloadLink = `<div style="margin-top:14px;"><a href="${baseDomain + res.download_url}" target="_blank" class="md-button md-button--primary" style="display:inline-block; text-decoration:none; font-weight:bold; padding:8px 16px;">下载已生成的实验报告 (.docx)</a></div>`;
-            }
+            const folderName = res.folder;
+            const baseDomain = apiUrl.replace('/api/upload', '');
+
             if (statusAlert) {
               statusAlert.className = 'status-alert status-success';
               statusAlert.style.display = 'block';
-              statusAlert.innerHTML = `<strong>投递成功，报告已自动生成</strong><br>已按规范完成排版。${downloadLink}`;
+              statusAlert.innerHTML = '<strong>素材已送达</strong><br>Gemini 3.8 Flash High 正在深度审阅课件与实拍图，正在为您定制起草实验报告...';
               statusAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+
+            let pollCount = 0;
+            const pollTimer = setInterval(() => {
+              pollCount++;
+              fetch(`${baseDomain}/api/check_status/${folderName}`)
+                .then(r => r.json())
+                .then(st => {
+                  if (st.status === 'completed') {
+                    clearInterval(pollTimer);
+                    const dlUrl = baseDomain + (st.docx_url || `/download/${folderName}/${encodeURIComponent(st.docx_filename)}`);
+                    statusAlert.className = 'status-alert status-success';
+                    statusAlert.innerHTML = `<strong>投递成功，报告已由 Gemini 3.8 Flash High 撰写完毕</strong><br>已按杭师大规范与《写作风格》排版完成。<div style="margin-top:14px;"><a href="${dlUrl}" target="_blank" class="md-button md-button--primary" style="display:inline-block; text-decoration:none; font-weight:bold; padding:8px 16px;">下载已生成的实验报告 (.docx)</a></div>`;
+                    const debugStatus = document.getElementById('debugStatus');
+                    if (debugStatus) debugStatus.innerText = 'Gemini 3.8 Flash High 写作排版完成！请点击上方按钮下载报告。';
+                    loadGeneratedReports();
+                  } else if (pollCount > 100) {
+                    clearInterval(pollTimer);
+                  }
+                })
+                .catch(() => {});
+            }, 3000);
           } catch(e) {
             if (statusAlert) {
               statusAlert.className = 'status-alert status-success';
@@ -337,4 +416,40 @@
       console.error(err);
     }
   };
+
+  function loadGeneratedReports() {
+    const input = document.getElementById('backendApiUrl');
+    const apiUrl = (input ? input.value : '').trim();
+    const baseDomain = apiUrl.replace('/api/upload', '');
+    const container = document.getElementById('reportsContainer');
+    if (!container || !baseDomain) return;
+
+    fetch(`${baseDomain}/api/reports`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.reports || data.reports.length === 0) {
+          container.innerHTML = '<div style="font-size:0.85rem; color:var(--md-default-fg-color--lighter);">暂无已生成的报告记录。</div>';
+          return;
+        }
+        container.innerHTML = data.reports.map(rpt => `
+          <div class="report-card-item">
+            <div>
+              <div class="report-info-title">${escapeHtml(rpt.experiment_name || '实验报告')} · ${escapeHtml(rpt.student_name || '未知同学')}</div>
+              <div class="report-info-meta">完成时间：${escapeHtml(rpt.completed_at || '-')} &nbsp;|&nbsp; 班级/学号：${escapeHtml(rpt.student_class || '-')}</div>
+            </div>
+            <a href="${baseDomain + rpt.download_url}" target="_blank" class="md-button md-button--primary report-dl-btn">下载 Word</a>
+          </div>
+        `).join('');
+      })
+      .catch(() => {
+        container.innerHTML = '<div style="font-size:0.85rem; color:var(--md-default-fg-color--lighter);">暂未连接到本地接收端。</div>';
+      });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  setTimeout(loadGeneratedReports, 500);
 </script>

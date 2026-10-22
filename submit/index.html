@@ -1428,31 +1428,45 @@
       const photoFilesInput = document.getElementById('photo_files');
       const apiUrl = (document.getElementById('backendApiUrl').value || '').trim();
 
-      if (!studentName) {
-        alert('请填写【学生姓名】！');
-        const nameEl = document.getElementById('student_name');
-        if (nameEl) {
-          nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          nameEl.focus();
+      const progressContainer = document.getElementById('progressContainer');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const statusAlert = document.getElementById('statusAlert');
+
+      function showInlineError(msg, focusId) {
+        if (statusAlert) {
+          statusAlert.className = 'status-alert status-error';
+          statusAlert.style.display = 'block';
+          statusAlert.innerHTML = `<strong>提示：</strong>${msg}`;
+          statusAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        if (focusId) {
+          const el = document.getElementById(focusId);
+          if (el) el.focus();
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = '提交素材数据流';
+          submitBtn.style.opacity = '1';
+        }
+      }
+
+      if (!studentName) {
+        showInlineError('请填写【学生姓名】', 'student_name');
         return;
       }
 
       if (!experimentName) {
-        alert('请填写【实验项目】名称！');
-        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        showInlineError('请填写【实验项目名称】', 'experiment_name');
         return;
       }
 
       if (!pptFileInput.files || pptFileInput.files.length === 0) {
-        alert('请上传课件 PPT 或 PDF 文件！');
-        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        showInlineError('请选择【实验课件（PPT / PDF）】文件', 'ppt_file');
         return;
       }
       if (!photoFilesInput.files || photoFilesInput.files.length === 0) {
-        alert('请至少上传一张实验实拍照片！');
-        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        showInlineError('请选择【实验实拍图像】照片', 'photo_files');
         return;
       }
 
@@ -1466,11 +1480,6 @@
       for (let i = 0; i < photoFilesInput.files.length; i++) {
         formData.append('photo_files', photoFilesInput.files[i]);
       }
-
-      const progressContainer = document.getElementById('progressContainer');
-      const progressBar = document.getElementById('progressBar');
-      const progressText = document.getElementById('progressText');
-      const statusAlert = document.getElementById('statusAlert');
 
       if (submitBtn) {
         submitBtn.disabled = true;

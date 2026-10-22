@@ -1237,7 +1237,7 @@
 <p>本投递通道用于接收实验课件（PPT / PDF）及实验实拍图像（如微孔板显色、试纸条拍照等）。上传后素材将直接流式传输至本地后台，由 AI Agent 自动读取素材并完成符合杭师大规范的排版报告。</p>
 </div>
 <div class="submit-card">
-<form id="submissionForm" onsubmit="handleFormSubmit(event)">
+<form id="submissionForm">
 <div class="form-grid">
 <div class="form-group">
     <label for="student_name">学生姓名 <span class="required">*</span></label>
@@ -1548,21 +1548,19 @@
         showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
       };
 
+      function showError(msg) {
+        if (statusAlert) {
+          statusAlert.className = 'status-alert status-error';
+          statusAlert.style.display = 'block';
+          statusAlert.innerHTML = `<strong>传输异常：</strong>${msg}`;
+        }
+      }
+
       xhr.send(formData);
     } catch (err) {
-      alert('前端代码运行异常: ' + err.message);
       console.error(err);
     }
   };
-
-    function showError(msg) {
-      statusAlert.className = 'status-alert status-error';
-      statusAlert.style.display = 'block';
-      statusAlert.innerHTML = `<strong>传输异常</strong><br>${msg}`;
-    }
-
-    xhr.send(formData);
-  }
 </script>
 
 

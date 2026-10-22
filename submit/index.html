@@ -1522,16 +1522,19 @@
               statusAlert.className = 'status-alert status-success';
               statusAlert.style.display = 'block';
               statusAlert.innerHTML = `<strong>投递成功，报告已自动生成</strong><br>已按规范完成排版。${downloadLink}`;
+              statusAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            alert('投递成功，实验报告已生成完毕，可在页面直接下载。');
           } catch(e) {
-            alert('投递成功，素材已传输至本地后台。');
+            if (statusAlert) {
+              statusAlert.className = 'status-alert status-success';
+              statusAlert.style.display = 'block';
+              statusAlert.innerHTML = '<strong>投递成功</strong><br>素材已传输至本地后台。';
+            }
           }
           const form = document.getElementById('submissionForm');
           if (form) form.reset();
         } else {
-          alert('上传受阻 (HTTP ' + xhr.status + '): ' + xhr.responseText);
-          showError('上传受阻 (HTTP ' + xhr.status + ')，请确认后台接收服务正常运行。');
+          showError(`上传受阻 (HTTP ${xhr.status})，请确认后台接收服务正常运行。`);
         }
       };
 
@@ -1542,7 +1545,6 @@
           submitBtn.innerText = '提交素材数据流';
         }
         if (progressContainer) progressContainer.style.display = 'none';
-        alert('网络连接失败！无法连接至传输节点: ' + apiUrl);
         showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
       };
 

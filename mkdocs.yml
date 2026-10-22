@@ -22,6 +22,7 @@ nav:
     - 初识土地，培育新苗: chuohe/week1.md
     - 整地起垄，实现滴灌: chuohe/week2.md
   - 关于我: about.md
+  - 实验报告投递: submit.md
 
 theme:
   logo: img/sheep.jpg #左上角logo，可插入图片链接

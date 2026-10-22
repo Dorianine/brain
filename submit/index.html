@@ -1502,11 +1502,21 @@
         if (progressContainer) progressContainer.style.display = 'none';
 
         if (xhr.status >= 200 && xhr.status < 300) {
-          alert('投递成功！素材已完整传输至本地后台！');
-          if (statusAlert) {
-            statusAlert.className = 'status-alert status-success';
-            statusAlert.style.display = 'block';
-            statusAlert.innerHTML = '<strong>投递成功</strong><br>素材已成功传输到号主电脑，AI Agent 正在为您处理。';
+          try {
+            const res = JSON.parse(xhr.responseText);
+            let downloadLink = '';
+            if (res.download_url) {
+              const baseDomain = apiUrl.replace('/api/upload', '');
+              downloadLink = `<div style="margin-top:14px;"><a href="${baseDomain + res.download_url}" target="_blank" class="md-button md-button--primary" style="display:inline-block; text-decoration:none; font-weight:bold; padding:8px 16px;">下载已生成的实验报告 (.docx)</a></div>`;
+            }
+            if (statusAlert) {
+              statusAlert.className = 'status-alert status-success';
+              statusAlert.style.display = 'block';
+              statusAlert.innerHTML = `<strong>投递成功，报告已自动生成</strong><br>已按规范完成排版。${downloadLink}`;
+            }
+            alert('投递成功，实验报告已生成完毕，可在页面直接下载。');
+          } catch(e) {
+            alert('投递成功，素材已传输至本地后台。');
           }
           const form = document.getElementById('submissionForm');
           if (form) form.reset();

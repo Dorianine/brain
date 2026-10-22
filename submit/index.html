@@ -1268,7 +1268,7 @@
 </div>
 <div class="progress-container" id="progressContainer" style="display:none;">
 <div class="progress-labels">
-    <span>正在传输数据流...</span>
+    <span id="progressPhase">正在传输数据流...</span>
     <span id="progressText">0%</span>
   </div>
 <div class="progress-track">
@@ -1277,6 +1277,7 @@
 </form>
 </div>
 <div id="statusAlert" class="status-alert" style="display:none;"></div>
+<div id="debugStatus" style="font-size:0.85rem; margin:10px 0; text-align:center; min-height:1.2rem; color:var(--md-default-fg-color--lighter);"></div>
 
 <p><button type="button" id="submitBtn" onclick="handleFormSubmit(event)" class="md-button md-button--primary submit-btn">
   提交素材数据流
@@ -1434,6 +1435,11 @@
       const statusAlert = document.getElementById('statusAlert');
 
       function showInlineError(msg, focusId) {
+        const debugStatus = document.getElementById('debugStatus');
+        if (debugStatus) {
+          debugStatus.innerText = msg;
+          debugStatus.style.color = '#ef4444';
+        }
         if (statusAlert) {
           statusAlert.className = 'status-alert status-error';
           statusAlert.style.display = 'block';
@@ -1499,6 +1505,14 @@
           const percent = Math.round((evt.loaded / evt.total) * 100);
           progressBar.style.width = percent + '%';
           progressText.innerText = percent + '%';
+          const debugStatus = document.getElementById('debugStatus');
+          if (debugStatus) {
+            if (percent >= 100) {
+              debugStatus.innerText = '数据已推送完毕 (100%)，正在后台排版生成 Word 报告，请稍候约 3 秒...';
+            } else {
+              debugStatus.innerText = '正在传输数据流 (' + percent + '%)...';
+            }
+          }
         }
       };
 

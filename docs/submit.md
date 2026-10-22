@@ -60,10 +60,10 @@
 </div>
 
 ??? note "传输节点配置"
-    默认传输节点为本地服务（`http://127.0.0.1:8090/api/upload`）。  
-    若通过校园网或移动热点访问，请输入号主的局域网 IP（例如 `http://10.192.1.11:8090/api/upload`）；若通过公网远程访问，请填入公网安全隧道地址。
+    默认传输节点已配置为国内高速公网通道（`https://27c4615a.r8.cpolar.cn/api/upload`）。  
+    无论访客在校园网、宿舍还是校外移动 5G 流量下，均可秒速直传到号主电脑。
     
-    <input type="text" id="backendApiUrl" class="md-input" value="http://127.0.0.1:8090/api/upload" style="margin-top: 8px;">
+    <input type="text" id="backendApiUrl" class="md-input" value="https://27c4615a.r8.cpolar.cn/api/upload" style="margin-top: 8px;">
 
 <style>
 /* 与 MkDocs Material 主题变量完全协同，自适应深色/浅色模式 */

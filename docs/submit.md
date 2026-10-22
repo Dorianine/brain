@@ -187,105 +187,128 @@
     }
   })();
 
-  function handleFormSubmit(e) {
-    if (e && e.preventDefault) e.preventDefault();
+  window.handleFormSubmit = function(e) {
+    try {
+      if (e && e.preventDefault) e.preventDefault();
 
-    const studentName = document.getElementById('student_name').value.trim();
-    const studentClass = document.getElementById('student_class').value.trim();
-    const experimentName = document.getElementById('experiment_name').value.trim();
-    const notes = document.getElementById('notes').value.trim();
-    const pptFileInput = document.getElementById('ppt_file');
-    const photoFilesInput = document.getElementById('photo_files');
-    const apiUrl = document.getElementById('backendApiUrl').value.trim();
-
-    if (!studentName) {
-      alert('请填写【学生姓名】！');
-      const nameEl = document.getElementById('student_name');
-      if (nameEl) {
-        nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        nameEl.focus();
+      const submitBtn = document.getElementById('submitBtn');
+      if (submitBtn) {
+        submitBtn.innerText = '正在准备打包文件...';
       }
-      return;
-    }
 
-    if (!experimentName) {
-      alert('请填写【实验项目】名称！');
-      return;
-    }
+      const studentName = (document.getElementById('student_name').value || '').trim();
+      const studentClass = (document.getElementById('student_class').value || '').trim();
+      const experimentName = (document.getElementById('experiment_name').value || '').trim();
+      const notes = (document.getElementById('notes').value || '').trim();
+      const pptFileInput = document.getElementById('ppt_file');
+      const photoFilesInput = document.getElementById('photo_files');
+      const apiUrl = (document.getElementById('backendApiUrl').value || '').trim();
 
-    if (!pptFileInput.files || pptFileInput.files.length === 0) {
-      alert('请上传课件 PPT 或 PDF 文件！');
-      return;
-    }
-    if (!photoFilesInput.files || photoFilesInput.files.length === 0) {
-      alert('请至少上传一张实验实拍照片！');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('student_name', studentName);
-    formData.append('student_class', studentClass);
-    formData.append('experiment_name', experimentName);
-    formData.append('notes', notes);
-    formData.append('ppt_file', pptFileInput.files[0]);
-
-    for (let i = 0; i < photoFilesInput.files.length; i++) {
-      formData.append('photo_files', photoFilesInput.files[i]);
-    }
-
-    const submitBtn = document.getElementById('submitBtn');
-    const progressContainer = document.getElementById('progressContainer');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const statusAlert = document.getElementById('statusAlert');
-
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.6';
-    submitBtn.innerText = '正在流式传输中...';
-    progressContainer.style.display = 'block';
-    progressBar.style.width = '0%';
-    progressText.innerText = '0%';
-    statusAlert.style.display = 'none';
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', apiUrl, true);
-
-    xhr.upload.onprogress = function(evt) {
-      if (evt.lengthComputable) {
-        const percent = Math.round((evt.loaded / evt.total) * 100);
-        progressBar.style.width = percent + '%';
-        progressText.innerText = percent + '%';
-      }
-    };
-
-    xhr.onload = function() {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.innerText = '提交素材数据流';
-      progressContainer.style.display = 'none';
-
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          const res = JSON.parse(xhr.responseText);
-          statusAlert.className = 'status-alert status-success';
-          statusAlert.style.display = 'block';
-          statusAlert.innerHTML = `<strong>投递成功</strong><br>${res.message || '素材已传输至本地后台，AI 即将开始处理。'}`;
-          document.getElementById('submissionForm').reset();
-        } catch(err) {
-          showError('响应解析异常：' + xhr.responseText);
+      if (!studentName) {
+        alert('请填写【学生姓名】！');
+        const nameEl = document.getElementById('student_name');
+        if (nameEl) {
+          nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          nameEl.focus();
         }
-      } else {
-        showError(`上传受阻 (HTTP ${xhr.status})，请确认后台接收服务正常运行。`);
+        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        return;
       }
-    };
 
-    xhr.onerror = function() {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.innerText = '提交素材数据流';
-      progressContainer.style.display = 'none';
-      showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
-    };
+      if (!experimentName) {
+        alert('请填写【实验项目】名称！');
+        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        return;
+      }
+
+      if (!pptFileInput.files || pptFileInput.files.length === 0) {
+        alert('请上传课件 PPT 或 PDF 文件！');
+        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        return;
+      }
+      if (!photoFilesInput.files || photoFilesInput.files.length === 0) {
+        alert('请至少上传一张实验实拍照片！');
+        if (submitBtn) submitBtn.innerText = '提交素材数据流';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('student_name', studentName);
+      formData.append('student_class', studentClass);
+      formData.append('experiment_name', experimentName);
+      formData.append('notes', notes);
+      formData.append('ppt_file', pptFileInput.files[0]);
+
+      for (let i = 0; i < photoFilesInput.files.length; i++) {
+        formData.append('photo_files', photoFilesInput.files[i]);
+      }
+
+      const progressContainer = document.getElementById('progressContainer');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const statusAlert = document.getElementById('statusAlert');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.innerText = '正在流式传输中...';
+      }
+      if (progressContainer) progressContainer.style.display = 'block';
+      if (progressBar) progressBar.style.width = '0%';
+      if (progressText) progressText.innerText = '0%';
+      if (statusAlert) statusAlert.style.display = 'none';
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', apiUrl, true);
+
+      xhr.upload.onprogress = function(evt) {
+        if (evt.lengthComputable && progressBar && progressText) {
+          const percent = Math.round((evt.loaded / evt.total) * 100);
+          progressBar.style.width = percent + '%';
+          progressText.innerText = percent + '%';
+        }
+      };
+
+      xhr.onload = function() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.innerText = '提交素材数据流';
+        }
+        if (progressContainer) progressContainer.style.display = 'none';
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          alert('投递成功！素材已完整传输至本地后台！');
+          if (statusAlert) {
+            statusAlert.className = 'status-alert status-success';
+            statusAlert.style.display = 'block';
+            statusAlert.innerHTML = '<strong>投递成功</strong><br>素材已成功传输到号主电脑，AI Agent 正在为您处理。';
+          }
+          const form = document.getElementById('submissionForm');
+          if (form) form.reset();
+        } else {
+          alert('上传受阻 (HTTP ' + xhr.status + '): ' + xhr.responseText);
+          showError('上传受阻 (HTTP ' + xhr.status + ')，请确认后台接收服务正常运行。');
+        }
+      };
+
+      xhr.onerror = function() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.innerText = '提交素材数据流';
+        }
+        if (progressContainer) progressContainer.style.display = 'none';
+        alert('网络连接失败！无法连接至传输节点: ' + apiUrl);
+        showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
+      };
+
+      xhr.send(formData);
+    } catch (err) {
+      alert('前端代码运行异常: ' + err.message);
+      console.error(err);
+    }
+  };
 
     function showError(msg) {
       statusAlert.className = 'status-alert status-error';

@@ -10,7 +10,7 @@
 <div class="form-grid">
   <div class="form-group">
     <label for="student_name">学生姓名 <span class="required">*</span></label>
-    <input type="text" id="student_name" class="md-input" required placeholder="如：张三">
+    <input type="text" id="student_name" class="md-input" placeholder="如：张三">
   </div>
   <div class="form-group">
     <label for="student_class">班级 / 学号</label>
@@ -18,19 +18,19 @@
   </div>
   <div class="form-group">
     <label for="experiment_name">实验项目 <span class="required">*</span></label>
-    <input type="text" id="experiment_name" class="md-input" required value="免疫标记技术" placeholder="如：免疫标记技术">
+    <input type="text" id="experiment_name" class="md-input" value="免疫标记技术" placeholder="如：免疫标记技术">
   </div>
 </div>
 
 <div class="form-group">
   <label for="ppt_file">实验课件（PPT / PDF） <span class="required">*</span></label>
-  <input type="file" id="ppt_file" class="file-input" accept=".pptx,.ppt,.pdf" required>
+  <input type="file" id="ppt_file" class="file-input" accept=".pptx,.ppt,.pdf">
   <span class="field-hint">支持 .pptx, .ppt, .pdf 格式文件</span>
 </div>
 
 <div class="form-group">
   <label for="photo_files">实验实拍图像（支持多选） <span class="required">*</span></label>
-  <input type="file" id="photo_files" class="file-input" accept="image/*" multiple required>
+  <input type="file" id="photo_files" class="file-input" accept="image/*" multiple>
   <span class="field-hint">支持上传手机实拍微孔板显色、试纸条条带等照片</span>
 </div>
 
@@ -51,7 +51,7 @@
 
 <div id="statusAlert" class="status-alert" style="display:none;"></div>
 
-<button type="submit" id="submitBtn" class="md-button md-button--primary submit-btn">
+<button type="button" id="submitBtn" onclick="handleFormSubmit(event)" class="md-button md-button--primary submit-btn">
   提交素材数据流
 </button>
 
@@ -188,7 +188,7 @@
   })();
 
   function handleFormSubmit(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     const studentName = document.getElementById('student_name').value.trim();
     const studentClass = document.getElementById('student_class').value.trim();
@@ -198,12 +198,27 @@
     const photoFilesInput = document.getElementById('photo_files');
     const apiUrl = document.getElementById('backendApiUrl').value.trim();
 
+    if (!studentName) {
+      alert('请填写【学生姓名】！');
+      const nameEl = document.getElementById('student_name');
+      if (nameEl) {
+        nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        nameEl.focus();
+      }
+      return;
+    }
+
+    if (!experimentName) {
+      alert('请填写【实验项目】名称！');
+      return;
+    }
+
     if (!pptFileInput.files || pptFileInput.files.length === 0) {
-      alert('请上传课件 PPT 或 PDF 文件');
+      alert('请上传课件 PPT 或 PDF 文件！');
       return;
     }
     if (!photoFilesInput.files || photoFilesInput.files.length === 0) {
-      alert('请至少上传一张实验实拍照片');
+      alert('请至少上传一张实验实拍照片！');
       return;
     }
 
@@ -226,6 +241,7 @@
 
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.6';
+    submitBtn.innerText = '正在流式传输中...';
     progressContainer.style.display = 'block';
     progressBar.style.width = '0%';
     progressText.innerText = '0%';
@@ -245,6 +261,7 @@
     xhr.onload = function() {
       submitBtn.disabled = false;
       submitBtn.style.opacity = '1';
+      submitBtn.innerText = '提交素材数据流';
       progressContainer.style.display = 'none';
 
       if (xhr.status >= 200 && xhr.status < 300) {
@@ -265,6 +282,7 @@
     xhr.onerror = function() {
       submitBtn.disabled = false;
       submitBtn.style.opacity = '1';
+      submitBtn.innerText = '提交素材数据流';
       progressContainer.style.display = 'none';
       showError('网络连接失败，无法连接至本地接收端。请确认接收服务已开启。');
     };

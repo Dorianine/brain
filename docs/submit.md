@@ -74,7 +74,7 @@
     默认传输节点已配置为国内高速公网通道（`https://e88120b.r8.cpolar.cn/api/upload`）。  
     无论访客在校园网、宿舍还是校外移动 5G 流量下，均可秒速直传到号主电脑。
     
-    <input type="text" id="backendApiUrl" class="md-input" value="https://e88120b.r8.cpolar.cn/api/upload" style="margin-top: 8px;">
+    <input type="text" id="backendApiUrl" autocomplete="off" class="md-input" value="https://e88120b.r8.cpolar.cn/api/upload" style="margin-top: 8px;">
 
 <style>
 /* 与 MkDocs Material 主题变量完全协同，自适应深色/浅色模式 */
@@ -229,8 +229,12 @@
   (function initApiUrl() {
     const hostname = window.location.hostname;
     const input = document.getElementById('backendApiUrl');
-    if (input && hostname && hostname !== 'localhost' && hostname !== '127.0.0.1' && !hostname.includes('github.io')) {
-      input.value = `http://${hostname}:8090/api/upload`;
+    if (input) {
+      if (hostname.includes('github.io')) {
+        input.value = 'https://e88120b.r8.cpolar.cn/api/upload';
+      } else if (hostname && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+        input.value = `http://${hostname}:8090/api/upload`;
+      }
     }
   })();
 

@@ -71,10 +71,10 @@
 ---
 
 ??? note "传输节点配置"
-    默认传输节点已配置为国内高速公网通道（`https://27c4615a.r8.cpolar.cn/api/upload`）。  
+    默认传输节点已配置为国内高速公网通道（`https://e88120b.r8.cpolar.cn/api/upload`）。  
     无论访客在校园网、宿舍还是校外移动 5G 流量下，均可秒速直传到号主电脑。
     
-    <input type="text" id="backendApiUrl" class="md-input" value="https://27c4615a.r8.cpolar.cn/api/upload" style="margin-top: 8px;">
+    <input type="text" id="backendApiUrl" class="md-input" value="https://e88120b.r8.cpolar.cn/api/upload" style="margin-top: 8px;">
 
 <style>
 /* 与 MkDocs Material 主题变量完全协同，自适应深色/浅色模式 */
